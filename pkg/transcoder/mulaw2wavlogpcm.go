@@ -25,10 +25,6 @@ func init() {
 // https://raw.githubusercontent.com/corkami/pics/master/binary/WAV.png
 // http://www.topherlee.com/software/pcm-tut-wavformat.html
 func mulaw2WavLogpcm(in *AudioFileIn, out *AudioFileOut, transcoder *Transcoder) (err error) {
-	// read all the file
-	if transcoder.Verbose {
-		graphIn(in)
-	}
 
 	// Get the WAV file configuration
 	channels := out.Config.(audioconfig.WavConfig).Channels
@@ -133,10 +129,6 @@ func mulaw2WavLogpcm(in *AudioFileIn, out *AudioFileOut, transcoder *Transcoder)
 		return fmt.Errorf("error writing data size: %v", err)
 	}
 	transcoder.Println("Data size:", fmt.Sprintf("% 02x", dataSize), "bytes written:", n)
-
-	if transcoder.Verbose {
-		graphOut(in, out)
-	}
 
 	return nil
 }

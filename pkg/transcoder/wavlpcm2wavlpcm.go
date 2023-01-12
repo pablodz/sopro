@@ -12,10 +12,6 @@ import (
 )
 
 func wavLpcm2wavLpcm(in *AudioFileIn, out *AudioFileOut, transcoder *Transcoder) (err error) {
-	// read all the file
-	if transcoder.Verbose {
-		graphIn(in)
-	}
 
 	// Get the WAV file configuration
 	channels := out.Config.(audioconfig.WavConfig).Channels
@@ -122,10 +118,6 @@ func wavLpcm2wavLpcm(in *AudioFileIn, out *AudioFileOut, transcoder *Transcoder)
 		return fmt.Errorf("error writing data size: %v", err)
 	}
 	transcoder.Println("Data size:", fmt.Sprintf("% 02x", dataSize), "bytes written:", n)
-
-	if transcoder.Verbose {
-		graphOut(in, out)
-	}
 
 	return nil
 }
