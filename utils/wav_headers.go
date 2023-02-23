@@ -7,20 +7,24 @@ import (
 	"github.com/pablodz/sopro/pkg/audioconfig"
 )
 
+type WavHeaderData struct {
+	Data []byte
+}
+
 // Generate a pool to only allocate one time
 var bytePool = sync.Pool{
 	New: func() interface{} {
 		// Return a new slice of 44 bytes for wav headers
-		return make([]byte, 44)
+		return new(WavHeaderData)
 	},
 }
 
 func GenerateSpaceForWavHeader() []byte {
 	// Get a new slice from the pool
-	buffer := bytePool.Get().([]byte)
+	newHeaderData := bytePool.Get().(*WavHeaderData)
 	// Release the slice back to the pool
-	bytePool.Put(&buffer)
-	return buffer
+	bytePool.Put(newHeaderData)
+	return newHeaderData.Data
 }
 
 // GenerateWavHeadersWithSize generates the headers for a wav file without the size fields
