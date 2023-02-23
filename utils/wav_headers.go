@@ -23,7 +23,7 @@ func GenerateSpaceForWavHeader() []byte {
 	// Get a new slice from the pool
 	newHeaderData := bytePool.Get().(*WavHeaderData)
 	// Release the slice back to the pool
-	bytePool.Put(newHeaderData)
+	defer bytePool.Put(newHeaderData)
 	return newHeaderData.Data
 }
 
